@@ -5,3 +5,6 @@ TestResults
 UAssetGUI/bin
 UAssetGUI/obj
 UAssetGUI/git_commit.txt
+/.idea
+UAssetCLI/bin
+UAssetCLI/obj

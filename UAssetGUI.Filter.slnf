@@ -1,0 +1,11 @@
+﻿{
+  "solution": {
+    "path": "UAssetGUI.sln",
+    "projects": [
+      "UAssetAPI\\UAssetAPI.Benchmark\\UAssetAPI.Benchmark.csproj",
+      "UAssetAPI\\UAssetAPI.Tests\\UAssetAPI.Tests.csproj",
+      "UAssetAPI\\UAssetAPI\\UAssetAPI.csproj",
+      "UAssetCLI\\UAssetCLI.csproj"
+    ]
+  }
+}
