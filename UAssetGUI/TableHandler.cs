@@ -1103,8 +1103,8 @@ namespace UAssetGUI
                     }
                 }
 
-                string ArrayIndex = row.Cells[row.Cells.Count - 4].Value.ToString();
-                string isZero = row.Cells[row.Cells.Count - 2].Value.ToString();
+                string ArrayIndex = row.Cells[row.Cells.Count - 4]?.Value?.ToString() ?? "0";
+                string isZero = row.Cells[row.Cells.Count - 2]?.Value?.ToString() ?? "false";
 
                 int.TryParse(ArrayIndex, out finalProp.ArrayIndex);
                 finalProp.IsZero = (isZero.ToLowerInvariant() == "true" || isZero == "1");
@@ -2036,7 +2036,17 @@ namespace UAssetGUI
                                 asset.LegacyFileVersion = Convert.ToInt32(propertyValue);
                                 break;
                             case "IsUnversioned":
-                                asset.IsUnversioned = propertyValue.ToLowerInvariant() == "true" || propertyValue == "1";
+                                bool nextUvVal = propertyValue.ToLowerInvariant() == "true" || propertyValue == "1";
+                                if (asset.IsUnversioned && !nextUvVal)
+                                {
+                                    // currently unversioned, switching to versioned
+                                    // make all custom versions serialized
+                                    foreach (CustomVersion cVer in asset.CustomVersionContainer)
+                                    {
+                                        cVer.IsSerialized = true;
+                                    }
+                                }
+                                asset.IsUnversioned = nextUvVal;
                                 break;
                             case "FileVersionLicenseeUE":
                                 asset.FileVersionLicenseeUE = Convert.ToInt32(propertyValue);
