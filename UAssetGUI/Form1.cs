@@ -1,4 +1,4 @@
-﻿using DiscordRPC;
+using DiscordRPC;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -299,6 +299,7 @@ namespace UAssetGUI
             "5.4",
             "5.5",
             "5.6",
+            "5.7",
         };
 
         private EngineVersion[] versionOptionsValues = new EngineVersion[]
@@ -340,6 +341,7 @@ namespace UAssetGUI
             EngineVersion.VER_UE5_4,
             EngineVersion.VER_UE5_5,
             EngineVersion.VER_UE5_6,
+            EngineVersion.VER_UE5_7,
         };
 
         public static readonly string GitHubRepo = "atenfyr/UAssetGUI";
@@ -1089,7 +1091,7 @@ namespace UAssetGUI
                                 }
                                 else if (pointerNode.Pointer is NormalExport)
                                 {
-                                    ((NormalExport)pointerNode.Pointer).Extras = dat== "zero" ? new byte[0] : UAPUtils.ConvertHexStringToByteArray(dat);
+                                    ((NormalExport)pointerNode.Pointer).Extras = dat == "zero" ? new byte[0] : UAPUtils.ConvertHexStringToByteArray(dat);
                                 }
                             }
                             catch (Exception)
@@ -2316,6 +2318,22 @@ namespace UAssetGUI
                         fcForm.RefreshTreeView(fcForm.saveTreeView);
                         fcForm.Activate();
                     }
+                }
+            }
+        }
+
+        private bool hasActivatedBefore = false;
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            // if first time the form is ever activated, check if FileContainerForm is open, if so then activate that
+            if (hasActivatedBefore) return;
+            hasActivatedBefore = true;
+            foreach (var form in Application.OpenForms)
+            {
+                if (form is FileContainerForm fcForm)
+                {
+                    fcForm.Activate();
+                    break;
                 }
             }
         }
